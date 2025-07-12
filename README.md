@@ -1,146 +1,149 @@
 # Fleet-Control-App-zanata-control-
 A simple offline-first Android application for managing a vehicle fleet. It allows users to add, edit, and view vehicle data, as well as import and export the entire dataset as a CSV file.
 
-🚀 Features
-Offline Data Storage: All data is stored locally on the device using the Room Persistence Library.
-
-CRUD Operations: Create, Read, Update, and Delete vehicle entries.
-
-CSV Import/Export: Easily back up and restore your fleet data by exporting to and importing from a CSV file.
-
-Clean User Interface: A simple and intuitive UI built with Material Design components, RecyclerView, and CardView.
-
-Modern Android Architecture: Built using modern Android development practices, including:
-
-Kotlin
-
-Coroutines for asynchronous operations
-
-ViewModel and LiveData for a lifecycle-aware UI
-
-Repository pattern for data abstraction
-
-🛠️ Tools and Technologies
-Language: Kotlin
-
-IDE: Android Studio
-
-Architecture: MVVM (Model-View-ViewModel)
-
-Core Libraries:
-
-Android Jetpack:
-
-Room: For local database storage.
-
-ViewModel: To store and manage UI-related data.
-
-LiveData: To build data objects that notify views of database changes.
-
-ViewBinding: To more easily write code that interacts with views.
-
-Coroutines: For managing background threads.
-
-OpenCSV: For handling CSV file import and export operations.
-
-Material Components: For UI elements.
-
-⚙️ How to Set Up and Run the Project
-To get this project running on your local machine, follow these steps:
-
-Prerequisites:
-
-Make sure you have the latest version of Android Studio installed.
-
-A physical Android device or an emulator running API 21 (Android 5.0) or higher.
-
-Clone the Repository:
-
-git clone https://github.com/your-username/fleet-control-app.git
-
-Open in Android Studio:
-
-Open Android Studio.
-
-Click on File -> Open...
-
-Navigate to the cloned repository folder and select it.
-
-Build and Run:
-
-Let Android Studio sync the Gradle files.
-
-Click the Run 'app' button (green play icon) and select a target device (emulator or physical device).
-
-📱 How to Use the Application
-Main Screen: Displays a list of all registered vehicles. If the list is empty, a message will appear.
-
-Add a Vehicle: Tap the floating + button at the bottom right to open the "Add Vehicle" screen.
-
-Fill in Details: Enter the vehicle's information in the provided form fields. The Plate field is mandatory and acts as a unique identifier.
-
-Save: Tap the "Save" button to add the vehicle to the database. You will be returned to the main screen.
-
-Edit a Vehicle: Tap on any vehicle in the list to open the "Edit Vehicle" screen with its details pre-filled. Make your changes and tap "Save".
-
-Import/Export Data:
-
-Tap the three-dot menu in the top-right corner.
-
-Select "Import CSV" to select a CSV file from your device and add its data to the app.
-
-Select "Export CSV" to save all vehicle data into a new CSV file named frota_export.csv.
-
-CSV File Format
-For the import functionality to work correctly, your CSV file must have a header row and the following columns in this exact order:
-
-PLACA,VEICULO,MARCA,MODELO,ANO,ONUS,VALOR,CHASSI,RENAVAN,MOTORISTA,CEP
-
-The app will skip the header row when importing.
-
-Each subsequent row should represent a single vehicle with its data matching the column order.
-
-✏️ How to Edit and Customize
-This project is structured to be easily maintainable and extensible.
-
-1. Modifying the User Interface
-Main list item: The layout for each vehicle card in the list is defined in app/src/main/res/layout/item_veiculo.xml.
-
-Main screen: The main activity layout containing the list and FAB is in app/src/main/res/layout/activity_main.xml.
-
-Add/Edit screen: The form for adding or editing a vehicle is in app/src/main/res/layout/activity_adicionar_editar_veiculo.xml.
-
-2. Adding a New Field
-If you want to store more information about each vehicle (e.g., "Fuel Type"), follow these steps:
-
-Update the Model: Add the new property to the Veiculo.kt data class.
-
-// in app/src/main/java/com/your_name/controledefrota/model/Veiculo.kt
-data class Veiculo(
-    // ... existing fields
-    val fuelType: String
-)
-
-Update the Database: You need to handle the database migration. The simplest way for a small change is to increment the version number in AppDatabase.kt and add a migration strategy (or just uninstall and reinstall the app during development).
-
-// in app/src/main/java/com/your_name/controledefrota/database/AppDatabase.kt
-@Database(entities = [Veiculo::class], version = 2, exportSchema = false) // Increment version
-
-Update the UI: Add a new TextInputEditText for the new field in activity_adicionar_editar_veiculo.xml.
-
-Update the Logic:
-
-In AdicionarEditarVeiculoActivity.kt, read the text from the new input field and save it to the Veiculo object in the salvarVeiculo() function.
-
-Update preencherCampos() to display the new field's data when editing.
-
-Update CSV Handling:
-
-In MainActivity.kt, add the new field to the header array in exportarCSV().
-
-Add the new property to the linha array in exportarCSV().
-
-Update the importarCSV() function to read the new column from the CSV file. Remember to adjust the column index check (if (it.size >= 12)).
-
-📄 License
-This project is licensed under the MIT License. See the LICENSE file for details.
+# FleetControlApp - Offline Fleet Management Android Application
+
+## Overview
+
+FleetControlApp is an Android application designed for managing vehicle fleets entirely offline. This app allows users to store, edit, and export vehicle information without requiring an internet connection, making it ideal for field operations in areas with limited connectivity.
+
+## Key Features
+
+- **Offline Operation**: All data is stored locally on the device
+- **CSV Import/Export**: Easily import existing data or export for backup
+- **Vehicle Management**: Add, edit, and delete vehicle records
+- **Search Functionality**: Find vehicles by driver name
+- **Material Design**: Modern, intuitive user interface
+- **Data Persistence**: Automatic saving using Room Database
+
+## Prerequisites
+
+To use and modify this project, you'll need:
+
+- **Android Studio** (Giraffe or later recommended)
+- **Java Development Kit** (JDK 17 or later)
+- **Android device or emulator** (API 21+)
+
+## Getting Started
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/FleetControlApp.git
+   ```
+2. Open the project in Android Studio
+3. Build the project (Build > Make Project)
+4. Run the app on an emulator or physical device
+
+### Basic Usage
+
+1. **Adding a Vehicle**:
+   - Tap the "+" button
+   - Fill in vehicle details
+   - Tap "Save"
+
+2. **Editing a Vehicle**:
+   - Tap on any vehicle in the list
+   - Modify the information
+   - Tap "Save"
+
+3. **Deleting a Vehicle**:
+   - Tap on a vehicle to edit
+   - Tap the delete icon (trash can) in the top right
+
+4. **Importing Data**:
+   - Tap the menu icon (⋮) in the top right
+   - Select "Import CSV"
+   - Choose a CSV file from your device
+
+5. **Exporting Data**:
+   - Tap the menu icon (⋮)
+   - Select "Export CSV"
+   - Choose a save location
+
+## Project Structure
+
+```
+FleetControlApp/
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/example/fleetcontrolapp/
+│   │   │   │   ├── adapter/          # RecyclerView adapters
+│   │   │   │   ├── dao/              # Database access objects
+│   │   │   │   ├── database/         # Database setup
+│   │   │   │   ├── model/            # Data models
+│   │   │   │   ├── repository/       # Data repositories
+│   │   │   │   ├── viewmodel/        # ViewModels
+│   │   │   │   ├── MainActivity.kt   # Main screen
+│   │   │   │   └── ...               # Other activities
+│   │   │   ├── res/                  # Resources
+│   │   │   └── AndroidManifest.xml
+│   └── build.gradle                  # Module-level build config
+├── gradle/
+└── build.gradle                      # Project-level build config
+```
+
+## Development Guide
+
+### Modifying the Project
+
+1. **Adding New Fields**:
+   - Update the `Veiculo.kt` data class
+   - Modify the `item_veiculo.xml` and `activity_adicionar_editar_veiculo.xml`
+   - Update the import/export functions in `MainActivity.kt`
+
+2. **Changing the UI**:
+   - Edit the XML layout files in `res/layout/`
+   - Modify styles in `res/values/themes.xml`
+
+3. **Adding New Features**:
+   - Create new activities for additional screens
+   - Extend the ViewModel and Repository as needed
+
+### Required Tools
+
+- **Android Studio**: Primary development environment
+- **Git**: Version control
+- **Room Database**: For local storage
+- **OpenCSV**: For CSV handling
+- **Material Components**: For UI elements
+
+## Dependencies
+
+The project uses the following libraries:
+
+```gradle
+dependencies {
+    // Room components
+    implementation "androidx.room:room-runtime:2.6.1"
+    kapt "androidx.room:room-compiler:2.6.1"
+    
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
+    
+    // CSV handling
+    implementation 'com.opencsv:opencsv:5.8'
+    
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    
+    // Material Design
+    implementation 'com.google.android.material:material:1.10.0'
+}
+```
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a pull request
+
+## License
+
+This project is licensed under the MIT License
