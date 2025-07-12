@@ -27,7 +27,7 @@ To use and modify this project, you'll need:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/FleetControlApp.git
+   [git clone https://github.com/yourusername/FleetControlApp.git](https://github.com/AlexandreZanata/Fleet-Control-App-zanata-control-.git)
    ```
 2. Open the project in Android Studio
 3. Build the project (Build > Make Project)
